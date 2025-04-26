@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { User } from "@supabase/supabase-js"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { createClient } from "../../../utils/supabase/client"
-import { LogOut } from "lucide-react"
+import { User } from '@supabase/supabase-js'
+import { LogOut } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { createClient } from '../../../utils/supabase/client'
 
 type NavigationProps = {
   user: User | null
@@ -15,12 +15,12 @@ const Navigation = ({ user }: NavigationProps) => {
   const supabase = createClient()
 
   const handleLogout = async () => {
-    if (!window.confirm("ログアウトしますが、宜しいですか？")) {
+    if (!window.confirm('ログアウトしますが、宜しいですか？')) {
       return
     }
 
     await supabase.auth.signOut()
-    router.push("/login")
+    router.push('/login')
     router.refresh()
   }
 

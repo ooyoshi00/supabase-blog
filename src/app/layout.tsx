@@ -1,19 +1,19 @@
-import Navigation from "@/components/navigation/Navigation"
-import "./globals.css"
-import type { Metadata, Viewport } from "next"
-import { M_PLUS_1 } from "next/font/google"
-import { createClient } from "../../utils/supabase/server"
-import ToastProvider from "@/components/providers/ToastProvider"
+import Navigation from '@/components/navigation/Navigation'
+import ToastProvider from '@/components/providers/ToastProvider'
+import type { Metadata, Viewport } from 'next'
+import { M_PLUS_1 } from 'next/font/google'
+import { createClient } from '../../utils/supabase/server'
+import './globals.css'
 
 const mPlus1 = M_PLUS_1({
-  weight: ["400", "700", "900"],
-  subsets: ["latin"],
+  weight: ['400', '700', '900'],
+  subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
   title: {
-    template: "Supabase認証ブログ",
-    default: "Supabase認証ブログ",
+    template: 'Supabase認証ブログ',
+    default: 'Supabase認証ブログ',
   },
 }
 
@@ -31,7 +31,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   const supabase = createClient()
   const { data } = await supabase.auth.getUser()
   const user = data?.user
-  
+
   return (
     <html lang="ja">
       <body className={mPlus1.className}>

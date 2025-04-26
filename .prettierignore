@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.astro/
+build/
+dist/
+out/
+public/
+package-lock.json
+next.config.ts

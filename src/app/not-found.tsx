@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // データが存在しないときの画面
 const NotFound = () => {
