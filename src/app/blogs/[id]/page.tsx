@@ -1,12 +1,12 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { compileMDX } from 'next-mdx-remote/rsc'
 import fs from 'fs'
 import TableOfContents from '../TableOfComponents'
 import BlogPost from './BlogPost'
 import matter from 'gray-matter'
+import { notFound } from 'next/navigation'
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ id: string }[]> {
   const postsDirectory = path.join(process.cwd(), 'mdx')
   const filenames = fs.readdirSync(postsDirectory)
   return filenames.map((filename) => ({
@@ -18,21 +18,33 @@ export async function generateStaticParams() {
  * @param dir urlのroute（p1,p2,p3）
  */
 async function loadMDX(dir: string) {
-  const root = path.resolve()
-  const mdxpath = path.join(root, 'mdx', dir, 'page.mdx')
-  const data = await readFile(mdxpath, { encoding: 'utf-8' })
-  // mdxをパースする。
-  // remark,rehypeのプラグインを指定する場合、またfront-matterもパースする場合、ここで指定する
-  const parsed = matter(data)
-  return parsed
+  try {
+    const root = path.resolve()
+    const mdxpath = path.join(root, 'mdx', dir, 'page.mdx')
+    const data = await readFile(mdxpath, { encoding: 'utf-8' })
+    const parsed = matter(data)
+    return parsed
+  } catch (error) {
+    console.error('Error loading MDX:', error)
+    return null
+  }
 }
 
-export default async function Page({ params }) {
-  const parsed = await loadMDX(params.id)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function Page({params}:any) {
+  const id = params.id
+  if (!id) {
+    notFound()
+  }
+
+  const parsed = await loadMDX(id)
+  if (!parsed) {
+    notFound()
+  }
+
   const { title, date } = parsed.data
   const mdText = parsed.content
 
-  // const frontmatter = mdx.frontmatter as { title: string; author: string }
   const post = {
     title,
     date,
@@ -40,21 +52,8 @@ export default async function Page({ params }) {
     author: '',
     tags: []
   }
+
   return (
-    // <div>
-    //   <header
-    //     style={
-    //       {
-    //         /*略*/;
-    //       }
-    //     }
-    //   >
-    //     <h1>{frontmatter.title}</h1>
-    //     <div>{frontmatter.author}</div>
-    //     <div>{new Date().toLocaleString()}</div>
-    //   </header>
-    //   <article>{content}</article>
-    // </div>
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8">
         <aside className="md:w-1/4">

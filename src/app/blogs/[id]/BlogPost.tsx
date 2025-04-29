@@ -2,7 +2,7 @@
 import { CalendarIcon, TagIcon } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 interface BlogPostProps {
   post: {
@@ -12,6 +12,29 @@ interface BlogPostProps {
     author: string
     tags: string[]
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CodeBlock = ({ inline, className, children, }: any) => {
+    if (inline) {
+        return <code className={className}>{children}</code>;
+    }
+ 
+    const match = /language-(\w+)/.exec(className || '');
+    if (!match) {
+        return <code className={className}>{children}</code>;
+    }
+ 
+    const lang = match && match[1] ? match[1] : '';
+ 
+    return (
+        <SyntaxHighlighter
+            style={atomDark}
+            language={lang}
+        >
+            {String(children).replace(/\n$/, '')}
+        </SyntaxHighlighter>
+    );
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
@@ -41,10 +64,10 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           </span>
         ))}
       </div>
-      <div className="prose prose-blue max-w-none">
+      <div className="prose prose-zinc max-w-none dark:prose-invert max-w-none">
         <ReactMarkdown
           components={{
-            h1: ({ node, ...props }) => (
+            h1: ({ ...props }) => (
               <h1
                 style={{
                   fontSize: '2rem',
@@ -55,7 +78,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
                 {...props}
               />
             ),
-            h2: ({ node, ...props }) => (
+            h2: ({ ...props }) => (
               <h2
                 style={{
                   fontSize: '1.5rem',
@@ -66,23 +89,18 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
                 {...props}
               />
             ),
-            code({ node, inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || '')
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  style={tomorrow}
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                >
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              )
-            }
+            h3: (props) => <h3 className="text-xl font-semibold mt-4 mb-2" {...props} />,
+            ul: (props) => <ul className="list-disc pl-6 mb-4" {...props} />,
+            ol: (props) => <ol className="list-decimal pl-6 mb-4" {...props} />,
+            li: (props) => <li className="mb-1" {...props} />,
+            table: (props) => (
+              <div className="overflow-x-auto">
+                <table className="table-auto border border-gray-300 text-left w-full mb-4" {...props} />
+              </div>
+            ),
+            th: (props) => <th className="border px-4 py-2 bg-gray-100" {...props} />,
+            td: (props) => <td className="border px-4 py-2" {...props} />,
+            code: CodeBlock
           }}
         >
           {post.mdText}

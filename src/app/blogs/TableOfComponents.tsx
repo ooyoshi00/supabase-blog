@@ -18,13 +18,12 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ content }) => {
 
   useEffect(() => {
     const headings = content.match(/^#{1,3} .+$/gm) || []
-    const tocItems = headings.map((heading) => {
+    const tocItems = headings.map((heading, index) => {
       const level = heading.split(' ')[0].length
       const text = heading.replace(/^#{1,3} /, '')
-      const id = text.toLowerCase().replace(/[^\w]+/g, '-')
+      const id = `${text.toLowerCase().replace(/[^\w]+/g, '-')}-${index}`
       return { id, text, level }
     })
-    console.log('tocItems:::', tocItems)
     setToc(tocItems)
   }, [content])
 

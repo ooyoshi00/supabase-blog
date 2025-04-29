@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
-const popularPosts = [
-  { id: 1, title: 'Next.jsの基礎: App RouterとPages Routerの違い' },
-  { id: 2, title: 'ReactとTypeScriptの組み合わせ: 型安全な開発の始め方' },
-  { id: 3, title: 'Tailwind CSSのベストプラクティス: 効率的なスタイリング手法' }
-]
+// const popularPosts = [
+//   { id: 1, title: 'Next.jsの基礎: App RouterとPages Routerの違い' },
+//   { id: 2, title: 'ReactとTypeScriptの組み合わせ: 型安全な開発の始め方' },
+//   { id: 3, title: 'Tailwind CSSのベストプラクティス: 効率的なスタイリング手法' }
+// ]
 
 const tags = [
   'Next.js',
