@@ -1,0 +1,69 @@
+---
+title: 'Next.jsの考え方 読書メモ'
+date: '2025-02-16'
+link: https://zenn.dev/akfm/books/nextjs-basic-principle
+---
+
+## 第一部
+
+- 
+
+## 第三部
+
+#### DataCache
+
+- サーバ上で実行される nextjs の fetch は拡張されており、DataCache と呼ばれるキャッシュを持っている
+- v14 以前では force-cache だったが、現在は no-store(キャッシュ無効)となっている
+- また fetch じゃなくても、`unstable_cache()`を使うことで、DB アクセス時でも DataCache を利用できる
+  - ただし v15 以降はこれは非推奨。移行先は"use cache"だが、これもまだ experimental。
+- 意図的に revalidate することも可能で、`revalidatePath()`や`revalidateTag()`を ServeActions や RouteHandler で呼び出すことで、キャッシュを再構築できる
+  - また、`revalidatePath()`は、指定したパスのキャッシュを再構築するが、`revalidateTag()`は、指定したタグのキャッシュを再構築する
+
+#### Router Cache
+
+-
+
+#### serverActions
+
+- サーバーサイドで`redirect()`を呼び出すことで、HTTP リダイレクトをせずに画面遷移ができる
+  - 指定されたパスへ 302 リダイレクトされる
+  - クライアント側でわざわざ失敗したときは router.push("/error")、成功したときは router.push("/top")みたいな処理を書かなくてもよくなる
+  - 本機能は操作中の処理を中断することになるので、ログインチェックやフォーム送信などに向いている
+- serverActions の呼び出しは直列化されるため、同時実行できるのは一つだけ
+
+## 第 4 部
+
+#### Streaming SSR
+
+-
+
+#### Partial Pre Rendering(PPR)
+
+- 基本は Static Rendering。Suspense 内を Dynamic Rendering とする。
+  - これにより Route 単位でレンダリングをまとめる必要がなくなる
+-
+
+#### (おまけ)Suspense の使い分け
+
+## 第 5 部 その他のプラクティス
+
+#### 認証と認可
+
+- nextjs v14 までは layout.tsx と page.tsx は並行レンダリングされていたので、layout.tsx に認証・認可の仕組みを持たせると情報漏洩につながる可能性があった
+  - layout.tsx で認可チェックをしているから、それを前提に page.tsx で機密情報を表示するようにしていると、中身が見えてしまう
+- v15 以降は layout.tsx と page.tsx は直列レンダリングされるようになったので、layout.tsx で認可チェックをしても情報漏洩は起こらない(はず)
+- 認証状態の保持は基本的には cookie を使う
+  - cookie へのアクセスはサーバーサイドから可能
+  - cookie に JWT を保持すると middleware で検証ができる
+    - JWT に認証状態を含む場合は、細かいチェックが middleware でできる
+    - ただし、JWT にセッション ID のみ含めている場合は ID の有効性・セッション情報の取得に別リソース(Redis や DB 接続)が必要
+      - -> この場合、middleware でのチェックは楽観的になる
+
+#### エラーハンドリング
+
+- AppRouter では、error.tsx に定義した UI を ServerComponents の実行中に表示することができる
+  - SSR 時の Client Components でエラーが起きた場合でも使われる
+- not-found.tsx により、404 の時の振る舞いも指定できる
+- serverActions でエラーが起きた際、error.tsx の内容が表示される
+  - ただ、form の入力内容が途中で破棄されてしまうなどの問題が起こりかねない
+  - なのでエラーを throw するのではなく、戻り値でエラーを表現することが望ましい

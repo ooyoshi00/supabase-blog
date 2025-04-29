@@ -1,9 +1,9 @@
-import Navigation from '@/components/navigation/Navigation'
-import ToastProvider from '@/components/providers/ToastProvider'
+import ToastProvider from '@/app/_component/providers/ToastProvider'
 import type { Metadata, Viewport } from 'next'
 import { M_PLUS_1 } from 'next/font/google'
 import { createClient } from '../../utils/supabase/server'
 import './globals.css'
+import Header from '@/app/_component/appHeader'
 
 const mPlus1 = M_PLUS_1({
   weight: ['400', '700', '900'],
@@ -37,7 +37,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
       <body className={mPlus1.className}>
         <ToastProvider />
         <div className="flex min-h-screen flex-col">
-          <Navigation user={user} />
+          <Header user={user} />
 
           <main className="flex-1">{children}</main>
 
