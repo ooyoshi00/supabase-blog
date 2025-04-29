@@ -1,6 +1,6 @@
 'use client'
 import { User } from '@supabase/supabase-js'
-import { LogOut } from 'lucide-react'
+import { LogIn, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '../../../utils/supabase/client'
@@ -61,6 +61,18 @@ const Header = ({ user }: HeaderProps) => {
                 </Link>
               </li>
             )}
+            {process.env.IS_DEV && (
+              <li>
+                <Link
+                  href="/rss"
+                  className={`hover:text-blue-200 transition-colors ${
+                    pathname === '/portfolio' ? 'font-bold' : ''
+                  }`}
+                >
+                  経歴
+                </Link>
+              </li>
+            )}
           </ul>
 
           <div className="text-sm font-bold">
@@ -79,9 +91,12 @@ const Header = ({ user }: HeaderProps) => {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center space-x-5">
-                <Link href="/login" className="hover:text-blue-200 transition-colors">ログイン</Link>
-                <Link href="/signup" className="hover:text-blue-200 transition-colors">サインアップ</Link>
+                <div className="flex items-center space-x-5">
+                  <Link href="/login" className="hover:text-blue-200 transition-colors flex gap-1">
+                    <LogIn className="h-5 w-5" />
+                    <span>管理者ログイン</span>
+                  </Link>
+                {/* <Link href="/signup" className="hover:text-blue-200 transition-colors">サインアップ</Link> */}
               </div>
             )}
           </div>
