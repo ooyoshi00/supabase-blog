@@ -12,8 +12,20 @@ const mPlus1 = M_PLUS_1({
 
 export const metadata: Metadata = {
   title: {
-    template: 'Supabase認証ブログ',
-    default: 'Supabase認証ブログ',
+    template: '%s | okamune home',
+    default: 'okamune home',
+  },
+  description: 'エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。',
+  openGraph: {
+    title: 'okamune home',
+    description: 'エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。',
+    type: 'website',
+    locale: 'ja_JP',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'okamune home',
+    description: 'エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。',
   },
 }
 
