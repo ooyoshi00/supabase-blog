@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     title: 'okamune home',
     description: 'エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。',
   },
+  other: {
+    'google-site-verification': 'google84a51d916f8f11be',
+  },
 }
 
 export const viewport: Viewport = {
