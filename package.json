@@ -7,10 +7,12 @@
     "dev": "next dev --turbopack",
     "build": "next build && node scripts/generate-sitemap.js",
     "start": "next start",
-    "lint": "biome lint .",
-    "format": "biome format --write ."
+    "format": "git ls-files \"**/*.{ts,tsx,md,json,css,html}\" | xargs -r biome format --write",
+    "lint": "git ls-files \"**/*.{ts,tsx,md,json,css,html}\" | xargs -r biome lint",
+    "check": "git ls-files \"**/*.{ts,tsx,md,json,css,html}\" | xargs -r biome check --write"
   },
   "dependencies": {
+    "@biomejs/biome": "^2.3.10",
     "@conform-to/react": "^1.4.0",
     "@conform-to/zod": "^1.4.0",
     "@emotion/cache": "^11.11.0",
@@ -71,7 +73,6 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.20",
-    "biome": "^1.9.4",
     "postcss": "^8.4.49",
     "prisma": "^5.11.0",
     "tailwindcss": "^4",
