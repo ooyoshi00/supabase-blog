@@ -9,12 +9,21 @@ import {
   MdFormatQuote,
   MdFormatStrikethrough,
   MdRedo,
+  MdSave,
   MdTaskAlt,
   MdTitle,
   MdUndo,
 } from "react-icons/md";
 
-const RichEditorToolbar = ({ editor }: { editor: Editor }) => {
+const RichEditorToolbar = ({
+  editor,
+  onSave,
+  isSaving,
+}: {
+  editor: Editor;
+  onSave: () => void;
+  isSaving: boolean;
+}) => {
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes("link").href;
     const url = window.prompt("URL", previousUrl);
@@ -38,6 +47,15 @@ const RichEditorToolbar = ({ editor }: { editor: Editor }) => {
 
   return (
     <div className="flex flex-wrap gap-2 border-b border-gray-600 p-4 text-2xl">
+      <button
+        type="button"
+        onClick={onSave}
+        disabled={isSaving}
+        className="flex items-center gap-1 rounded border border-gray-300 px-2 py-1 text-sm"
+      >
+        <MdSave />
+        保存
+      </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
