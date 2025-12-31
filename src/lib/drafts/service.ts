@@ -68,6 +68,32 @@ const collectImageRefs = (value: JsonValue, refs: ImageRef[]) => {
   }
 };
 
+const applyImageRefPolicy = (value: JsonValue, allowedRefs: Set<string>): JsonValue => {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => applyImageRefPolicy(item as JsonValue, allowedRefs))
+      .filter((item) => item !== null);
+  }
+
+  if (!isRecord(value)) {
+    return value;
+  }
+
+  if (isImageNode(value)) {
+    const src = getImageSrc(value);
+    if (!src || !allowedRefs.has(src)) {
+      return null;
+    }
+  }
+
+  if (Array.isArray(value.content)) {
+    const sanitized = applyImageRefPolicy(value.content as JsonValue, allowedRefs);
+    return { ...value, content: sanitized };
+  }
+
+  return value;
+};
+
 export const buildDraftInput = (rawContent: JsonValue): DraftInput => {
   const sanitizedContent = sanitizeContent(rawContent) as Record<string, unknown>;
   const imageRefs: ImageRef[] = [];
@@ -77,4 +103,17 @@ export const buildDraftInput = (rawContent: JsonValue): DraftInput => {
     content: sanitizedContent,
     imageRefs,
   };
+};
+
+export const normalizeDraftContent = (
+  rawContent: JsonValue,
+  imageRefs: ImageRef[],
+) => {
+  const allowedRefs = new Set(
+    imageRefs
+      .slice()
+      .sort((a, b) => a.order - b.order)
+      .map((ref) => ref.storageRef),
+  );
+  return applyImageRefPolicy(rawContent, allowedRefs) as Record<string, unknown>;
 };
