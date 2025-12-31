@@ -130,3 +130,10 @@
 - 定期的に振り返りを行い、プロセスを改善
 - 新しいツールや手法を適切に評価して取り入れる
 - チームや将来の開発者のために知識を文書化
+
+## Active Technologies
+- TypeScript 5.3.3 + Next.js 15.3, React 19, @supabase/supabase-js, Tiptap 3 (001-save-tiptap-content)
+- Supabase（データベース + 画像ストレージ） (001-save-tiptap-content)
+
+## Recent Changes
+- 001-save-tiptap-content: Added TypeScript 5.3.3 + Next.js 15.3, React 19, @supabase/supabase-js, Tiptap 3

@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: Draft API
+  version: 1.0.0
+paths:
+  /api/drafts/me:
+    get:
+      summary: 現在ユーザーの下書きを取得
+      responses:
+        '200':
+          description: 下書きを返す
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Draft'
+        '404':
+          description: 下書きが存在しない
+    post:
+      summary: 下書きを保存（作成または更新）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DraftInput'
+      responses:
+        '200':
+          description: 保存済み下書きを返す
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Draft'
+components:
+  schemas:
+    DraftInput:
+      type: object
+      required:
+        - content
+        - imageRefs
+      properties:
+        content:
+          type: object
+          description: 本文の構造化データ
+        imageRefs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageRef'
+    Draft:
+      type: object
+      required:
+        - draftId
+        - userId
+        - content
+        - imageRefs
+        - updatedAt
+      properties:
+        draftId:
+          type: string
+        userId:
+          type: string
+        content:
+          type: object
+        imageRefs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageRef'
+        updatedAt:
+          type: string
+          format: date-time
+    ImageRef:
+      type: object
+      required:
+        - assetId
+        - storageRef
+        - order
+      properties:
+        assetId:
+          type: string
+        storageRef:
+          type: string
+        order:
+          type: integer
