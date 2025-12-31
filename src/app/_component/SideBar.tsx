@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 // const popularPosts = [
 //   { id: 1, title: 'Next.jsの基礎: App RouterとPages Routerの違い' },
@@ -7,14 +7,14 @@ import Link from 'next/link'
 // ]
 
 const tags = [
-  'Next.js',
-  'React',
-  'TypeScript',
-  'フロントエンド',
-  'バックエンド',
-  'CSS',
-  'GraphQL'
-]
+  "Next.js",
+  "React",
+  "TypeScript",
+  "フロントエンド",
+  "バックエンド",
+  "CSS",
+  "GraphQL",
+];
 
 const Sidebar = () => {
   return (
@@ -49,7 +49,7 @@ const Sidebar = () => {
         </div>
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

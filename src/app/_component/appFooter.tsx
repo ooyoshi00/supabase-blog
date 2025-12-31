@@ -1,12 +1,12 @@
-import Image from 'next/image'
-import nextConfig from '../../../next.config.mjs'
+import Image from "next/image";
+import nextConfig from "../../../next.config.mjs";
 
-const BASE_PATH = nextConfig.basePath || ''
+const BASE_PATH = nextConfig.basePath || "";
 
 const socialLinks = {
-  'X(旧Twitter)': {
-    name: '@yosshioka0022',
-    link: 'https://x.com/okamune_web',
+  "X(旧Twitter)": {
+    name: "@yosshioka0022",
+    link: "https://x.com/okamune_web",
     icon: (
       <Image
         src={`${BASE_PATH}/images/x-logo.png`}
@@ -15,11 +15,11 @@ const socialLinks = {
         height={24}
         className="text-blue-500"
       />
-    )
+    ),
   },
   GitHub: {
-    name: '@ooyoshi00',
-    link: 'https://github.com/ooyoshi00',
+    name: "@ooyoshi00",
+    link: "https://github.com/ooyoshi00",
     icon: (
       <Image
         src={`${BASE_PATH}/images/github.svg`}
@@ -28,11 +28,11 @@ const socialLinks = {
         height={24}
         className="text-blue-500"
       />
-    )
+    ),
   },
   Zenn: {
-    name: '@yoshiooon',
-    link: 'https://zenn.dev/yoshiooon',
+    name: "@yoshiooon",
+    link: "https://zenn.dev/yoshiooon",
     icon: (
       <Image
         src={`${BASE_PATH}/images/zenn.svg`}
@@ -41,11 +41,11 @@ const socialLinks = {
         height={24}
         className="text-blue-500"
       />
-    )
+    ),
   },
   Qiita: {
-    name: '@okamune',
-    link: 'https://qiita.com/okamune',
+    name: "@okamune",
+    link: "https://qiita.com/okamune",
     icon: (
       <Image
         src={`${BASE_PATH}/images/qiita.png`}
@@ -53,9 +53,9 @@ const socialLinks = {
         width={24}
         height={24}
       />
-    )
-  }
-}
+    ),
+  },
+};
 
 export default function Footer() {
   return (
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-wrap justify-center gap-6">
             {Object.entries(socialLinks).map(([platform, data]) => {
-              const Icon = data.icon
+              const Icon = data.icon;
               return (
                 <a
                   key={platform}
@@ -79,7 +79,7 @@ export default function Footer() {
                   {Icon && Icon}
                   <span className="font-medium">{data.name}</span>
                 </a>
-              )
+              );
             })}
           </div>
           <p className="text-sm text-gray-500 mt-4">
@@ -88,5 +88,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

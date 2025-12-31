@@ -1,6 +1,6 @@
-const startYear = 2020
+const startYear = 2020;
 const IntroCard = () => {
-  const workYear = new Date().getFullYear() - startYear
+  const workYear = new Date().getFullYear() - startYear;
   return (
     <div className="bg-white shadow-md rounded-lg p-6 border-t-4 border-blue-600">
       <h1 className="text-3xl font-bold mb-4 text-blue-800">okamune</h1>
@@ -12,7 +12,7 @@ const IntroCard = () => {
         年目となります。
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default IntroCard
+export default IntroCard;

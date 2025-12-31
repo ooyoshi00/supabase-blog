@@ -1,9 +1,9 @@
-import RootLayout from '../(main)/layout'
+import RootLayout from "../(main)/layout";
 
 export default function BlogsLayout({
-  children
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return <RootLayout>{children}</RootLayout>
+  return <RootLayout>{children}</RootLayout>;
 }

@@ -1,31 +1,31 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { Link } from 'react-scroll'
+import { useEffect, useState } from "react";
+import { Link } from "react-scroll";
 
 interface TOCItem {
-  id: string
-  text: string
-  level: number
+  id: string;
+  text: string;
+  level: number;
 }
 
 interface TableOfContentsProps {
-  content: string
+  content: string;
 }
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ content }) => {
-  const [toc, setToc] = useState<TOCItem[]>([])
+  const [toc, setToc] = useState<TOCItem[]>([]);
 
   useEffect(() => {
-    const headings = content.match(/^#{1,3} .+$/gm) || []
+    const headings = content.match(/^#{1,3} .+$/gm) || [];
     const tocItems = headings.map((heading, index) => {
-      const level = heading.split(' ')[0].length
-      const text = heading.replace(/^#{1,3} /, '')
-      const id = `${text.toLowerCase().replace(/[^\w]+/g, '-')}-${index}`
-      return { id, text, level }
-    })
-    setToc(tocItems)
-  }, [content])
+      const level = heading.split(" ")[0].length;
+      const text = heading.replace(/^#{1,3} /, "");
+      const id = `${text.toLowerCase().replace(/[^\w]+/g, "-")}-${index}`;
+      return { id, text, level };
+    });
+    setToc(tocItems);
+  }, [content]);
 
   return (
     <nav className="bg-white rounded-lg shadow-md p-4">
@@ -48,7 +48,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ content }) => {
         ))}
       </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default TableOfContents
+export default TableOfContents;

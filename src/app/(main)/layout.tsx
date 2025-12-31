@@ -1,9 +1,9 @@
 interface MainLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const MainLayout = async ({ children }: MainLayoutProps) => {
-  return <div className="mx-auto max-w-screen-lg px-2 my-10">{children}</div>
-}
+  return <div className="mx-auto max-w-screen-lg px-2 my-10">{children}</div>;
+};
 
-export default MainLayout
+export default MainLayout;

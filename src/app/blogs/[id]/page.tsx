@@ -1,17 +1,17 @@
-import { readFile } from 'node:fs/promises'
-import path from 'node:path'
-import fs from 'fs'
-import TableOfContents from '../TableOfComponents'
-import BlogPost from './BlogPost'
-import matter from 'gray-matter'
-import { notFound } from 'next/navigation'
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import fs from "fs";
+import TableOfContents from "../TableOfComponents";
+import BlogPost from "./BlogPost";
+import matter from "gray-matter";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
-  const postsDirectory = path.join(process.cwd(), 'mdx')
-  const filenames = fs.readdirSync(postsDirectory)
+  const postsDirectory = path.join(process.cwd(), "mdx");
+  const filenames = fs.readdirSync(postsDirectory);
   return filenames.map((filename) => ({
-    id: filename.replace(/\.mdx?$/, '')
-  }))
+    id: filename.replace(/\.mdx?$/, ""),
+  }));
 }
 
 /**
@@ -19,39 +19,39 @@ export async function generateStaticParams(): Promise<{ id: string }[]> {
  */
 async function loadMDX(dir: string) {
   try {
-    const root = path.resolve()
-    const mdxpath = path.join(root, 'mdx', dir, 'page.mdx')
-    const data = await readFile(mdxpath, { encoding: 'utf-8' })
-    const parsed = matter(data)
-    return parsed
+    const root = path.resolve();
+    const mdxpath = path.join(root, "mdx", dir, "page.mdx");
+    const data = await readFile(mdxpath, { encoding: "utf-8" });
+    const parsed = matter(data);
+    return parsed;
   } catch (error) {
-    console.error('Error loading MDX:', error)
-    return null
+    console.error("Error loading MDX:", error);
+    return null;
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function Page({params}:any) {
-  const id = params.id
+export default async function Page({ params }: any) {
+  const id = params.id;
   if (!id) {
-    notFound()
+    notFound();
   }
 
-  const parsed = await loadMDX(id)
+  const parsed = await loadMDX(id);
   if (!parsed) {
-    notFound()
+    notFound();
   }
 
-  const { title, date } = parsed.data
-  const mdText = parsed.content
+  const { title, date } = parsed.data;
+  const mdText = parsed.content;
 
   const post = {
     title,
     date,
     mdText,
-    author: '',
-    tags: []
-  }
+    author: "",
+    tags: [],
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -66,5 +66,5 @@ export default async function Page({params}:any) {
         </article>
       </div>
     </div>
-  )
+  );
 }

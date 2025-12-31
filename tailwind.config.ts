@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 export default {
   content: [
@@ -8,5 +8,5 @@ export default {
   theme: {
     // ...
   },
-  plugins: [require('@tailwindcss/typography')] // 追記
-} satisfies Config
+  plugins: [require("@tailwindcss/typography")], // 追記
+} satisfies Config;

@@ -1,5 +1,5 @@
-import { Suspense } from 'react'
-import BlogList from './BlogList'
+import { Suspense } from "react";
+import BlogList from "./BlogList";
 
 const Blogs = () => {
   return (
@@ -12,7 +12,7 @@ const Blogs = () => {
         <BlogList />
       </Suspense>
     </div>
-  )
-}
+  );
+};
 
-export default Blogs
+export default Blogs;

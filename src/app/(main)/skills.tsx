@@ -1,7 +1,7 @@
-import { skillData } from './data/skills'
+import { skillData } from "./data/skills";
 
 const Skills = () => {
-  const categories = ['frontend', 'backend', 'infra', 'etc']
+  const categories = ["frontend", "backend", "infra", "etc"];
   return (
     <section className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-blue-800">スキルセット</h2>
@@ -32,7 +32,7 @@ const Skills = () => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Skills
+export default Skills;

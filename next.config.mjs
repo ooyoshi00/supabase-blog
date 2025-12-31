@@ -1,17 +1,17 @@
-import nextMDX from '@next/mdx'
+import nextMDX from "@next/mdx";
 
-const withMDX = nextMDX()
+const withMDX = nextMDX();
 
 const nextConfig = {
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'okamune-home.supabase.co'
-      }
-    ]
-  }
-}
+        protocol: "https",
+        hostname: "okamune-home.supabase.co",
+      },
+    ],
+  },
+};
 
-export default withMDX(nextConfig)
+export default withMDX(nextConfig);

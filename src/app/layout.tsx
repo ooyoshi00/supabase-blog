@@ -1,51 +1,54 @@
-import ToastProvider from '@/app/_component/providers/ToastProvider'
-import type { Metadata, Viewport } from 'next'
-import { M_PLUS_1 } from 'next/font/google'
-import { createClient } from '../../utils/supabase/server'
-import './globals.css'
-import Header from '@/app/_component/appHeader'
+import ToastProvider from "@/app/_component/providers/ToastProvider";
+import type { Metadata, Viewport } from "next";
+import { M_PLUS_1 } from "next/font/google";
+import { createClient } from "../../utils/supabase/server";
+import "./globals.css";
+import Header from "@/app/_component/appHeader";
 
 const mPlus1 = M_PLUS_1({
-  weight: ['400', '700', '900'],
-  subsets: ['latin'],
-})
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | okamune home',
-    default: 'okamune home',
+    template: "%s | okamune home",
+    default: "okamune home",
   },
-  description: 'エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。',
+  description:
+    "エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。",
   openGraph: {
-    title: 'okamune home',
-    description: 'エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。',
-    type: 'website',
-    locale: 'ja_JP',
+    title: "okamune home",
+    description:
+      "エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。",
+    type: "website",
+    locale: "ja_JP",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'okamune home',
-    description: 'エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。',
+    card: "summary_large_image",
+    title: "okamune home",
+    description:
+      "エンジニアとして活動しているokamuneに関するホームページです。なんでもできる中級エンジニアに僕はなりたい。",
   },
   other: {
-    'google-site-verification': 'google84a51d916f8f11be',
+    "google-site-verification": "google84a51d916f8f11be",
   },
-}
+};
 
 export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
-}
+};
 
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 // ルートレイアウト
 const RootLayout = async ({ children }: RootLayoutProps) => {
-  const supabase = createClient()
-  const { data } = await supabase.auth.getUser()
-  const user = data?.user
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+  const user = data?.user;
 
   return (
     <html lang="ja">
@@ -64,7 +67,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         </div>
       </body>
     </html>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;

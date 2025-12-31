@@ -1,9 +1,5 @@
 const Home = () => {
-  return (
-    <>
-      開発中。。
-    </>
-  )
-}
+  return <>開発中。。</>;
+};
 
-export default Home
+export default Home;

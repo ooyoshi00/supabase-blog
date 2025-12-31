@@ -1,6 +1,6 @@
-import IntroCard from './IntroCard'
-import Skills from './skills'
-import { Suspense } from 'react'
+import IntroCard from "./IntroCard";
+import Skills from "./skills";
+import { Suspense } from "react";
 
 const Home = () => {
   return (
@@ -17,7 +17,7 @@ const Home = () => {
         <Skills />
       </Suspense>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

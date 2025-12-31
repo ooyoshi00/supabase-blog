@@ -1,10 +1,10 @@
-'use client'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Breadcrumbs = () => {
-  const pathname = usePathname()
-  const pathSegments = pathname.split('/').filter((segment) => segment !== '')
+  const pathname = usePathname();
+  const pathSegments = pathname.split("/").filter((segment) => segment !== "");
 
   return (
     <nav className="bg-white py-2 px-4 shadow-md">
@@ -15,7 +15,7 @@ const Breadcrumbs = () => {
           </Link>
         </li>
         {pathSegments.map((segment, index) => {
-          const href = `/${pathSegments.slice(0, index + 1).join('/')}`
+          const href = `/${pathSegments.slice(0, index + 1).join("/")}`;
           return (
             <li key={href}>
               <span className="mx-2 text-gray-500">/</span>
@@ -23,11 +23,11 @@ const Breadcrumbs = () => {
                 {segment}
               </Link>
             </li>
-          )
+          );
         })}
       </ol>
     </nav>
-  )
-}
+  );
+};
 
-export default Breadcrumbs
+export default Breadcrumbs;

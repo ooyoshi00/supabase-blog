@@ -1,14 +1,14 @@
-import Link from 'next/link'
-import { CalendarIcon, TagIcon } from 'lucide-react'
+import Link from "next/link";
+import { CalendarIcon, TagIcon } from "lucide-react";
 
 interface BlogPost {
-  id: number
-  title: string
-  pathname: string
-  excerpt?: string
-  date?: string
-  tags?: string[]
-  image?: string
+  id: number;
+  title: string;
+  pathname: string;
+  excerpt?: string;
+  date?: string;
+  tags?: string[];
+  image?: string;
 }
 
 const BlogCard: React.FC<BlogPost> = (post) => {
@@ -40,7 +40,7 @@ const BlogCard: React.FC<BlogPost> = (post) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BlogCard
+export default BlogCard;

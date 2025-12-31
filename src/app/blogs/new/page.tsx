@@ -1,6 +1,5 @@
-import Tiptap from './Editor'
+import Tiptap from "./Editor";
 
 export default function Home() {
-    
-  return <Tiptap />
+  return <Tiptap />;
 }

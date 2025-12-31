@@ -1,30 +1,30 @@
-'use client'
-import { useForm } from '@conform-to/react'
-import { parseWithZod } from '@conform-to/zod'
-import { useActionState } from 'react'
-import { z } from 'zod'
-import { signup } from './action'
+"use client";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { useActionState } from "react";
+import { z } from "zod";
+import { signup } from "./action";
 
 const schema = z.object({
-  email: z.string().email({ message: 'メールアドレスの形式ではありません。' }),
-  password: z.string().min(6, { message: '6文字以上入力する必要があります。' }),
-})
+  email: z.string().email({ message: "メールアドレスの形式ではありません。" }),
+  password: z.string().min(6, { message: "6文字以上入力する必要があります。" }),
+});
 
 export default function LoginPage() {
   const [lastResult, action] = useActionState(signup, {
     initialValue: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     } satisfies z.infer<typeof schema>,
-  })
+  });
   const [form, fields] = useForm({
     lastResult,
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema })
+      return parseWithZod(formData, { schema });
     },
-    shouldValidate: 'onBlur',
-    shouldRevalidate: 'onInput',
-  })
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+  });
 
   return (
     <div className="max-w-[400px] mx-auto">
@@ -37,7 +37,7 @@ export default function LoginPage() {
             className="border rounded-md w-full py-2 px-3 focus:outline-none focus:border-sky-500"
             placeholder="メールアドレス"
             id="email"
-            name='email'
+            name="email"
             defaultValue={fields.email.value}
           />
           <p style={{ color: "red" }}>{fields.email.errors}</p>
@@ -50,7 +50,7 @@ export default function LoginPage() {
             className="border rounded-md w-full py-2 px-3 focus:outline-none focus:border-sky-500"
             placeholder="パスワード"
             id="password"
-            name='password'
+            name="password"
             defaultValue={fields.password.value}
           />
           <p style={{ color: "red" }}>{fields.password.errors}</p>
@@ -67,5 +67,5 @@ export default function LoginPage() {
         </div>
       </form>
     </div>
-  )
+  );
 }

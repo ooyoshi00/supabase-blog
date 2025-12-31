@@ -1,41 +1,38 @@
-'use client'
-import { CalendarIcon, TagIcon } from 'lucide-react'
-import ReactMarkdown from 'react-markdown'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+"use client";
+import { CalendarIcon, TagIcon } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 interface BlogPostProps {
   post: {
-    title: string
-    mdText: string
-    date: string
-    author: string
-    tags: string[]
-  }
+    title: string;
+    mdText: string;
+    date: string;
+    author: string;
+    tags: string[];
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CodeBlock = ({ inline, className, children, }: any) => {
-    if (inline) {
-        return <code className={className}>{children}</code>;
-    }
- 
-    const match = /language-(\w+)/.exec(className || '');
-    if (!match) {
-        return <code className={className}>{children}</code>;
-    }
- 
-    const lang = match && match[1] ? match[1] : '';
- 
-    return (
-        <SyntaxHighlighter
-            style={atomDark}
-            language={lang}
-        >
-            {String(children).replace(/\n$/, '')}
-        </SyntaxHighlighter>
-    );
-}
+const CodeBlock = ({ inline, className, children }: any) => {
+  if (inline) {
+    return <code className={className}>{children}</code>;
+  }
+
+  const match = /language-(\w+)/.exec(className || "");
+  if (!match) {
+    return <code className={className}>{children}</code>;
+  }
+
+  const lang = match && match[1] ? match[1] : "";
+
+  return (
+    <SyntaxHighlighter style={atomDark} language={lang}>
+      {String(children).replace(/\n$/, "")}
+    </SyntaxHighlighter>
+  );
+};
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   return (
@@ -70,10 +67,10 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
             h1: ({ ...props }) => (
               <h1
                 style={{
-                  fontSize: '2rem',
-                  fontWeight: 'bold',
-                  paddingTop: '1rem',
-                  paddingBottom: '1rem'
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  paddingTop: "1rem",
+                  paddingBottom: "1rem",
                 }}
                 {...props}
               />
@@ -81,33 +78,40 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
             h2: ({ ...props }) => (
               <h2
                 style={{
-                  fontSize: '1.5rem',
-                  fontWeight: 'bold',
-                  paddingTop: '1rem',
-                  paddingBottom: '1rem'
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  paddingTop: "1rem",
+                  paddingBottom: "1rem",
                 }}
                 {...props}
               />
             ),
-            h3: (props) => <h3 className="text-xl font-semibold mt-4 mb-2" {...props} />,
+            h3: (props) => (
+              <h3 className="text-xl font-semibold mt-4 mb-2" {...props} />
+            ),
             ul: (props) => <ul className="list-disc pl-6 mb-4" {...props} />,
             ol: (props) => <ol className="list-decimal pl-6 mb-4" {...props} />,
             li: (props) => <li className="mb-1" {...props} />,
             table: (props) => (
               <div className="overflow-x-auto">
-                <table className="table-auto border border-gray-300 text-left w-full mb-4" {...props} />
+                <table
+                  className="table-auto border border-gray-300 text-left w-full mb-4"
+                  {...props}
+                />
               </div>
             ),
-            th: (props) => <th className="border px-4 py-2 bg-gray-100" {...props} />,
+            th: (props) => (
+              <th className="border px-4 py-2 bg-gray-100" {...props} />
+            ),
             td: (props) => <td className="border px-4 py-2" {...props} />,
-            code: CodeBlock
+            code: CodeBlock,
           }}
         >
           {post.mdText}
         </ReactMarkdown>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BlogPost
+export default BlogPost;

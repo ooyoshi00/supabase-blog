@@ -1,28 +1,28 @@
-'use client'
-import { User } from '@supabase/supabase-js'
-import { LogIn, LogOut } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { createClient } from '../../../utils/supabase/client'
+"use client";
+import { User } from "@supabase/supabase-js";
+import { LogIn, LogOut } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "../../../utils/supabase/client";
 
 type HeaderProps = {
-  user: User | null
-}
+  user: User | null;
+};
 
 const Header = ({ user }: HeaderProps) => {
-  const pathname = usePathname()
-  const router = useRouter()
-  const supabase = createClient()
+  const pathname = usePathname();
+  const router = useRouter();
+  const supabase = createClient();
 
   const handleLogout = async () => {
-    if (!window.confirm('ログアウトしますが、宜しいですか？')) {
-      return
+    if (!window.confirm("ログアウトしますが、宜しいですか？")) {
+      return;
     }
 
-    await supabase.auth.signOut()
-    router.push('/login')
-    router.refresh()
-  }
+    await supabase.auth.signOut();
+    router.push("/login");
+    router.refresh();
+  };
 
   return (
     <header className="bg-blue-600 text-white">
@@ -33,7 +33,7 @@ const Header = ({ user }: HeaderProps) => {
               <Link
                 href="/"
                 className={`hover:text-blue-200 transition-colors ${
-                  pathname === '/' ? 'font-bold' : ''
+                  pathname === "/" ? "font-bold" : ""
                 }`}
               >
                 ホーム
@@ -43,7 +43,7 @@ const Header = ({ user }: HeaderProps) => {
               <Link
                 href="/blogs"
                 className={`hover:text-blue-200 transition-colors ${
-                  pathname === '/blogs' ? 'font-bold' : ''
+                  pathname === "/blogs" ? "font-bold" : ""
                 }`}
               >
                 ブログ
@@ -54,7 +54,7 @@ const Header = ({ user }: HeaderProps) => {
                 <Link
                   href="/rss"
                   className={`hover:text-blue-200 transition-colors ${
-                    pathname === '/rss' ? 'font-bold' : ''
+                    pathname === "/rss" ? "font-bold" : ""
                   }`}
                 >
                   RSS
@@ -66,7 +66,7 @@ const Header = ({ user }: HeaderProps) => {
                 <Link
                   href="/rss"
                   className={`hover:text-blue-200 transition-colors ${
-                    pathname === '/portfolio' ? 'font-bold' : ''
+                    pathname === "/portfolio" ? "font-bold" : ""
                   }`}
                 >
                   経歴
@@ -78,24 +78,36 @@ const Header = ({ user }: HeaderProps) => {
           <div className="text-sm font-bold">
             {user ? (
               <div className="flex items-center space-x-5">
-                <Link href="/blog/new" className="hover:text-blue-200 transition-colors">
+                <Link
+                  href="/blog/new"
+                  className="hover:text-blue-200 transition-colors"
+                >
                   投稿
                 </Link>
 
-                <Link href="/settings/profile" className="hover:text-blue-200 transition-colors">
+                <Link
+                  href="/settings/profile"
+                  className="hover:text-blue-200 transition-colors"
+                >
                   設定
                 </Link>
 
-                <div className="cursor-pointer hover:text-blue-200 transition-colors" onClick={handleLogout}>
+                <div
+                  className="cursor-pointer hover:text-blue-200 transition-colors"
+                  onClick={handleLogout}
+                >
                   <LogOut className="h-5 w-5" />
                 </div>
               </div>
             ) : (
-                <div className="flex items-center space-x-5">
-                  <Link href="/login" className="hover:text-blue-200 transition-colors flex gap-1">
-                    <LogIn className="h-5 w-5" />
-                    <span>管理者ログイン</span>
-                  </Link>
+              <div className="flex items-center space-x-5">
+                <Link
+                  href="/login"
+                  className="hover:text-blue-200 transition-colors flex gap-1"
+                >
+                  <LogIn className="h-5 w-5" />
+                  <span>管理者ログイン</span>
+                </Link>
                 {/* <Link href="/signup" className="hover:text-blue-200 transition-colors">サインアップ</Link> */}
               </div>
             )}
@@ -103,7 +115,7 @@ const Header = ({ user }: HeaderProps) => {
         </div>
       </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
