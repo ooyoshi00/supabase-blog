@@ -90,7 +90,7 @@ describe("Tiptap editor integration", () => {
       expect(editorInstance.commands.setContent).toHaveBeenCalled();
     });
 
-    fireEvent.click(screen.getByRole("button", { name: "保存" }));
+    fireEvent.click(screen.getByRole("button", { name: "下書き保存" }));
 
     await waitFor(() => {
       expect(updateDraft).toHaveBeenCalledTimes(1);

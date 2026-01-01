@@ -108,3 +108,16 @@ export async function updateDraft(
 
   return mapDraft(data as DraftRow);
 }
+
+export async function deleteDraft(userId: string, draftId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from(DRAFTS_TABLE)
+    .delete()
+    .eq("user_id", userId)
+    .eq("id", draftId);
+
+  if (error) {
+    throw error;
+  }
+}

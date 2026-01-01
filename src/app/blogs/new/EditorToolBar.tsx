@@ -10,7 +10,6 @@ import {
   MdFormatStrikethrough,
   MdImage,
   MdRedo,
-  MdSave,
   MdTaskAlt,
   MdTitle,
   MdUndo,
@@ -18,15 +17,11 @@ import {
 
 const RichEditorToolbar = ({
   editor,
-  onSave,
   onImageUpload,
-  isSaving,
   isUploading,
 }: {
   editor: Editor;
-  onSave: () => void;
   onImageUpload: (file: File) => void;
-  isSaving: boolean;
   isUploading: boolean;
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -64,15 +59,6 @@ const RichEditorToolbar = ({
 
   return (
     <div className="flex flex-wrap gap-2 border-b border-gray-600 p-4 text-2xl">
-      <button
-        type="button"
-        onClick={onSave}
-        disabled={isSaving}
-        className="flex items-center gap-1 rounded border border-gray-300 px-2 py-1 text-sm"
-      >
-        <MdSave />
-        保存
-      </button>
       <button
         type="button"
         onClick={() => fileInputRef.current?.click()}

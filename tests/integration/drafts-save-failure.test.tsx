@@ -76,7 +76,7 @@ describe("Tiptap editor save failure", () => {
       expect(fetchDraft).toHaveBeenCalledTimes(0);
     });
 
-    fireEvent.click(screen.getByRole("button", { name: "保存" }));
+    fireEvent.click(screen.getByRole("button", { name: "下書き保存" }));
 
     await waitFor(() => {
       expect(screen.getByText("保存に失敗しました。再試行してください")).toBeInTheDocument();
