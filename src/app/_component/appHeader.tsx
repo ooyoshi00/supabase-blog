@@ -79,7 +79,7 @@ const Header = ({ user }: HeaderProps) => {
             {user ? (
               <div className="flex items-center space-x-5">
                 <Link
-                  href="/blog/new"
+                  href="/blogs/new"
                   className="hover:text-blue-200 transition-colors"
                 >
                   投稿
