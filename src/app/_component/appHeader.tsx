@@ -79,10 +79,18 @@ const Header = ({ user }: HeaderProps) => {
             {user ? (
               <div className="flex items-center space-x-5">
                 <Link
-                  href="/blog/new"
+                  href="/blogs/new"
                   className="hover:text-blue-200 transition-colors"
                 >
                   投稿
+                </Link>
+                <Link
+                  href="/blogs/drafts"
+                  className={`hover:text-blue-200 transition-colors ${
+                    pathname?.startsWith("/blogs/drafts") ? "font-bold" : ""
+                  }`}
+                >
+                  下書き一覧
                 </Link>
 
                 <Link

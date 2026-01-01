@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { AiOutlineLink } from "react-icons/ai";
 import {
   MdCode,
@@ -8,13 +8,23 @@ import {
   MdFormatListNumbered,
   MdFormatQuote,
   MdFormatStrikethrough,
+  MdImage,
   MdRedo,
   MdTaskAlt,
   MdTitle,
   MdUndo,
 } from "react-icons/md";
 
-const RichEditorToolbar = ({ editor }: { editor: Editor }) => {
+const RichEditorToolbar = ({
+  editor,
+  onImageUpload,
+  isUploading,
+}: {
+  editor: Editor;
+  onImageUpload: (file: File) => void;
+  isUploading: boolean;
+}) => {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes("link").href;
     const url = window.prompt("URL", previousUrl);
@@ -32,12 +42,39 @@ const RichEditorToolbar = ({ editor }: { editor: Editor }) => {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   }, [editor]);
 
+  const handleFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        onImageUpload(file);
+      }
+      event.target.value = "";
+    },
+    [onImageUpload],
+  );
+
   if (!editor) {
     return null;
   }
 
   return (
     <div className="flex flex-wrap gap-2 border-b border-gray-600 p-4 text-2xl">
+      <button
+        type="button"
+        onClick={() => fileInputRef.current?.click()}
+        disabled={isUploading}
+        className="flex items-center gap-1 rounded border border-gray-300 px-2 py-1 text-sm"
+      >
+        <MdImage />
+        画像
+      </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+      />
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}

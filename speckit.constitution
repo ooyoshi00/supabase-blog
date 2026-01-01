@@ -1,0 +1,36 @@
+Speckit Constitution
+
+Purpose
+Define the shared principles for this project so quality, tests, UX, and
+performance are consistent and measurable.
+
+Principles
+
+1) Code Quality
+- Prioritize clarity over cleverness; prefer explicit intent and readable flows.
+- Keep modules focused (single responsibility) and avoid deep coupling.
+- Use meaningful names, small functions, and early returns to reduce nesting.
+- Remove dead code and avoid unused dependencies.
+- Document non-obvious decisions and tradeoffs at the point of change.
+
+2) Testing Standards
+- Write tests for new behavior and bug fixes; no regressions without a test.
+- Cover core logic with unit tests and critical flows with integration tests.
+- Validate error paths and edge cases, not only happy paths.
+- Keep tests deterministic: no reliance on real time, network, or global state.
+- Tests must be easy to run locally and in CI with clear failure output.
+
+3) User Experience Consistency
+- Align UI copy, spacing, and component behavior with existing patterns.
+- Ensure accessibility basics: keyboard navigation, focus states, and contrast.
+- Prefer consistent loading, empty, and error states across pages.
+- Avoid UI drift by reusing shared components and tokens when available.
+- Changes should not degrade responsiveness on common breakpoints.
+
+4) Performance Requirements
+- Measure before optimizing; avoid speculative micro-optimizations.
+- Keep critical paths fast: reduce blocking JS, excessive re-renders, and N+1
+  data access.
+- Use lazy loading and caching where appropriate; define cache invalidation.
+- Guard against large payloads and unbounded lists; paginate or virtualize.
+- Maintain baseline performance budgets and track regressions.

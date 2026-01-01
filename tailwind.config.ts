@@ -1,12 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 export default {
-  content: [
-    // ...
-  ],
-  theme: {
-    // ...
-  },
-  plugins: [require("@tailwindcss/typography")], // 追記
+  content: ["./src/**/*.{ts,tsx,js,jsx,md,mdx}", "./mdx/**/*.{md,mdx}"],
+  plugins: [typography],
 } satisfies Config;
