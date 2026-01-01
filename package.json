@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build && node scripts/generate-sitemap.js",
     "start": "next start",
     "format": "git ls-files \"**/*.{ts,tsx,md,json,css,html}\" | xargs -r biome format --write",
@@ -57,7 +57,7 @@
     "rss": "^1.2.2",
     "sass": "^1.94.2",
     "sharp": "^0.34.1",
-    "tailwind-merge": "^3.2.0",
+    "tailwind-merge": "^4.0.0",
     "tw-animate-css": "^1.2.5",
     "uuid": "^11.1.0",
     "webpack": "^5.97.1",
