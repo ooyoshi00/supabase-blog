@@ -44,18 +44,27 @@ vi.mock("@tiptap/react", () => ({
 }));
 
 const fetchDraft = vi.fn();
-const saveDraft = vi.fn();
+const createDraft = vi.fn();
+const updateDraft = vi.fn();
+const push = vi.fn();
 
 vi.mock("@/lib/drafts/client", () => ({
   fetchDraft: (...args: unknown[]) => fetchDraft(...args),
-  saveDraft: (...args: unknown[]) => saveDraft(...args),
+  createDraft: (...args: unknown[]) => createDraft(...args),
+  updateDraft: (...args: unknown[]) => updateDraft(...args),
+}));
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push }),
 }));
 
 describe("Tiptap editor integration", () => {
   beforeEach(() => {
     editorInstance = mockEditor();
     fetchDraft.mockReset();
-    saveDraft.mockReset();
+    createDraft.mockReset();
+    updateDraft.mockReset();
+    push.mockReset();
   });
 
   it("loads draft content and saves", async () => {
@@ -71,19 +80,25 @@ describe("Tiptap editor integration", () => {
     };
 
     fetchDraft.mockResolvedValue(draft);
-    saveDraft.mockResolvedValue(draft);
+    updateDraft.mockResolvedValue(draft);
 
-    render(<Tiptap />);
+    render(<Tiptap draftId="draft-1" />);
 
     await waitFor(() => {
       expect(fetchDraft).toHaveBeenCalledTimes(1);
+      expect(fetchDraft).toHaveBeenCalledWith("draft-1");
       expect(editorInstance.commands.setContent).toHaveBeenCalled();
     });
 
     fireEvent.click(screen.getByRole("button", { name: "保存" }));
 
     await waitFor(() => {
-      expect(saveDraft).toHaveBeenCalledTimes(1);
+      expect(updateDraft).toHaveBeenCalledTimes(1);
+      expect(updateDraft).toHaveBeenCalledWith(
+        "draft-1",
+        expect.objectContaining({ content: expect.any(Object) }),
+      );
+      expect(push).toHaveBeenCalledWith("/blogs/drafts");
     });
   });
 });

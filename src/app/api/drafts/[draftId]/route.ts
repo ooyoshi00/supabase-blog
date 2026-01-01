@@ -1,38 +1,15 @@
 import { NextResponse } from "next/server";
 import { createClient } from "../../../../../utils/supabase/server";
-import { fetchDraftByUserId, upsertDraft } from "@/lib/drafts/repository";
-import type { DraftInput } from "@/lib/drafts/types";
+import { fetchDraftById, updateDraft } from "@/lib/drafts/repository";
+import { isValidDraftInput } from "@/lib/drafts/validation";
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === "object" && value !== null && !Array.isArray(value);
-
-const isValidDraftInput = (value: unknown): value is DraftInput => {
-  if (!isRecord(value)) {
-    return false;
-  }
-
-  if (!isRecord(value.content)) {
-    return false;
-  }
-
-  if (!Array.isArray(value.imageRefs)) {
-    return false;
-  }
-
-  return value.imageRefs.every((ref) => {
-    if (!isRecord(ref)) {
-      return false;
-    }
-
-    return (
-      typeof ref.assetId === "string" &&
-      typeof ref.storageRef === "string" &&
-      typeof ref.order === "number"
-    );
-  });
+type RouteParams = {
+  params: {
+    draftId: string;
+  };
 };
 
-export async function GET() {
+export async function GET(_: Request, { params }: RouteParams) {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -40,7 +17,7 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const draft = await fetchDraftByUserId(data.user.id);
+  const draft = await fetchDraftById(data.user.id, params.draftId);
 
   if (!draft) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
@@ -49,7 +26,7 @@ export async function GET() {
   return NextResponse.json(draft, { status: 200 });
 }
 
-export async function POST(request: Request) {
+export async function PATCH(request: Request, { params }: RouteParams) {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -69,7 +46,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const draft = await upsertDraft(data.user.id, payload);
+    const draft = await updateDraft(data.user.id, params.draftId, payload);
+    if (!draft) {
+      return NextResponse.json({ error: "Not Found" }, { status: 404 });
+    }
     return NextResponse.json(draft, { status: 200 });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Save failed";

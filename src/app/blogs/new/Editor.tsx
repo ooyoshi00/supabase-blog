@@ -6,16 +6,22 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import { v4 as uuidv4 } from "uuid";
 import RichEditorToolbar from "@/app/blogs/new/EditorToolBar";
-import { fetchDraft, saveDraft } from "@/lib/drafts/client";
+import { createDraft, fetchDraft, updateDraft } from "@/lib/drafts/client";
 import { buildDraftInput, normalizeDraftContent } from "@/lib/drafts/service";
 import { createClient } from "../../../../utils/supabase/client";
+import { useRouter } from "next/navigation";
 import "./editor.scss";
 
 const DEFAULT_CONTENT = "";
 const STATUS_RESET_MS = 4000;
 const IMAGE_BUCKET = "draft-images";
 
-const Tiptap = () => {
+type EditorProps = {
+  draftId?: string;
+};
+
+const Tiptap = ({ draftId }: EditorProps) => {
+  const router = useRouter();
   const editor = useEditor({
     extensions: [StarterKit, Image],
     content: DEFAULT_CONTENT,
@@ -37,7 +43,7 @@ const Tiptap = () => {
   const [canRetryLoad, setCanRetryLoad] = useState(false);
 
   const loadDraft = useCallback(async () => {
-    if (!editor) {
+    if (!editor || !draftId) {
       return;
     }
 
@@ -46,7 +52,7 @@ const Tiptap = () => {
     setCanRetryLoad(false);
 
     try {
-      const draft = await fetchDraft();
+      const draft = await fetchDraft(draftId);
       if (draft?.content) {
         const normalized = normalizeDraftContent(draft.content, draft.imageRefs ?? []);
         editor.commands.setContent(normalized);
@@ -64,15 +70,15 @@ const Tiptap = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [editor]);
+  }, [draftId, editor]);
 
   useEffect(() => {
-    if (!editor) {
+    if (!editor || !draftId) {
       return;
     }
 
     void loadDraft();
-  }, [editor, loadDraft]);
+  }, [draftId, editor, loadDraft]);
 
   const handleSave = async () => {
     if (!editor) {
@@ -84,8 +90,13 @@ const Tiptap = () => {
     setCanRetrySave(false);
     try {
       const input = buildDraftInput(editor.getJSON());
-      await saveDraft(input);
+      if (draftId) {
+        await updateDraft(draftId, input);
+      } else {
+        await createDraft(input);
+      }
       setStatusMessage("保存しました");
+      router.push("/blogs/drafts");
     } catch (error) {
       if (error instanceof Error && error.message === "Unauthorized") {
         setStatusMessage("ログインしてください");

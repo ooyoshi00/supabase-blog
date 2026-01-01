@@ -1,6 +1,6 @@
 import type { Draft, DraftInput } from "./types";
 
-const DRAFTS_ENDPOINT = "/api/drafts/me";
+const DRAFTS_ENDPOINT = "/api/drafts";
 
 const parseError = async (response: Response) => {
   try {
@@ -15,8 +15,10 @@ const parseError = async (response: Response) => {
   return response.statusText || "Request failed";
 };
 
-export const fetchDraft = async () => {
-  const response = await fetch(DRAFTS_ENDPOINT, { method: "GET" });
+const buildDraftEndpoint = (draftId: string) => `${DRAFTS_ENDPOINT}/${draftId}`;
+
+export const fetchDraft = async (draftId: string) => {
+  const response = await fetch(buildDraftEndpoint(draftId), { method: "GET" });
 
   if (response.status === 404) {
     return null;
@@ -29,9 +31,25 @@ export const fetchDraft = async () => {
   return (await response.json()) as Draft;
 };
 
-export const saveDraft = async (input: DraftInput) => {
+export const createDraft = async (input: DraftInput) => {
   const response = await fetch(DRAFTS_ENDPOINT, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseError(response));
+  }
+
+  return (await response.json()) as Draft;
+};
+
+export const updateDraft = async (draftId: string, input: DraftInput) => {
+  const response = await fetch(buildDraftEndpoint(draftId), {
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },

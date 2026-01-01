@@ -84,6 +84,14 @@ const Header = ({ user }: HeaderProps) => {
                 >
                   投稿
                 </Link>
+                <Link
+                  href="/blogs/drafts"
+                  className={`hover:text-blue-200 transition-colors ${
+                    pathname?.startsWith("/blogs/drafts") ? "font-bold" : ""
+                  }`}
+                >
+                  下書き一覧
+                </Link>
 
                 <Link
                   href="/settings/profile"

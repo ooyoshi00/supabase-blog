@@ -117,3 +117,81 @@ export const normalizeDraftContent = (
   );
   return applyImageRefPolicy(rawContent, allowedRefs) as Record<string, unknown>;
 };
+
+const collapseWhitespace = (value: string) => value.replace(/\s+/g, " ").trim();
+
+const findFirstText = (value: JsonValue): string | null => {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const text = findFirstText(item as JsonValue);
+      if (text) {
+        return text;
+      }
+    }
+    return null;
+  }
+
+  if (!isRecord(value)) {
+    return typeof value === "string" ? collapseWhitespace(value) : null;
+  }
+
+  if (value.type === "text" && typeof value.text === "string") {
+    return collapseWhitespace(value.text);
+  }
+
+  if (Array.isArray(value.content)) {
+    return findFirstText(value.content as JsonValue);
+  }
+
+  return null;
+};
+
+const findHeadingText = (value: JsonValue): string | null => {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const text = findHeadingText(item as JsonValue);
+      if (text) {
+        return text;
+      }
+    }
+    return null;
+  }
+
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  if (value.type === "heading") {
+    const headingText = Array.isArray(value.content)
+      ? findFirstText(value.content as JsonValue)
+      : null;
+    if (headingText) {
+      return headingText;
+    }
+  }
+
+  if (Array.isArray(value.content)) {
+    return findHeadingText(value.content as JsonValue);
+  }
+
+  return null;
+};
+
+const truncateText = (value: string, maxLength: number) => {
+  if (value.length <= maxLength) {
+    return value;
+  }
+  return `${value.slice(0, Math.max(0, maxLength - 3))}...`;
+};
+
+export const buildDraftPreview = (rawContent: JsonValue) => {
+  const heading = findHeadingText(rawContent);
+  const firstText = findFirstText(rawContent);
+  const title = heading || firstText || "無題の下書き";
+  const excerptSource = firstText || "";
+
+  return {
+    title,
+    excerpt: excerptSource ? truncateText(excerptSource, 80) : "本文がまだありません",
+  };
+};

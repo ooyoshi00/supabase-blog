@@ -43,28 +43,37 @@ vi.mock("@tiptap/react", () => ({
 }));
 
 const fetchDraft = vi.fn();
-const saveDraft = vi.fn();
+const createDraft = vi.fn();
+const updateDraft = vi.fn();
+const push = vi.fn();
 
 vi.mock("@/lib/drafts/client", () => ({
   fetchDraft: (...args: unknown[]) => fetchDraft(...args),
-  saveDraft: (...args: unknown[]) => saveDraft(...args),
+  createDraft: (...args: unknown[]) => createDraft(...args),
+  updateDraft: (...args: unknown[]) => updateDraft(...args),
+}));
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push }),
 }));
 
 describe("Tiptap editor save failure", () => {
   beforeEach(() => {
     editorInstance = mockEditor();
     fetchDraft.mockReset();
-    saveDraft.mockReset();
+    createDraft.mockReset();
+    updateDraft.mockReset();
+    push.mockReset();
   });
 
   it("shows retry message when save fails", async () => {
     fetchDraft.mockResolvedValue(null);
-    saveDraft.mockRejectedValue(new Error("failure"));
+    createDraft.mockRejectedValue(new Error("failure"));
 
     render(<Tiptap />);
 
     await waitFor(() => {
-      expect(fetchDraft).toHaveBeenCalledTimes(1);
+      expect(fetchDraft).toHaveBeenCalledTimes(0);
     });
 
     fireEvent.click(screen.getByRole("button", { name: "保存" }));
