@@ -5,13 +5,11 @@ import { deleteDraft } from "@/lib/drafts/repository";
 import { isValidDraftInput } from "@/lib/drafts/validation";
 import { buildDraftPreview } from "@/lib/drafts/service";
 
-type RouteParams = {
-  params: {
-    draftId: string;
-  };
-};
-
-export async function POST(request: Request, { params }: RouteParams) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ draftId: string }> }
+) {
+  const { draftId } = await params;
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -39,7 +37,7 @@ export async function POST(request: Request, { params }: RouteParams) {
       title: preview.title,
       excerpt: preview.excerpt,
     });
-    await deleteDraft(data.user.id, params.draftId);
+    await deleteDraft(data.user.id, draftId);
     return NextResponse.json(post, { status: 200 });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Publish failed";

@@ -3,13 +3,11 @@ import { createClient } from "../../../../../utils/supabase/server";
 import { fetchDraftById, updateDraft } from "@/lib/drafts/repository";
 import { isValidDraftInput } from "@/lib/drafts/validation";
 
-type RouteParams = {
-  params: {
-    draftId: string;
-  };
-};
-
-export async function GET(_: Request, { params }: RouteParams) {
+export async function GET(
+  _: Request,
+  { params }: { params: Promise<{ draftId: string }> }
+) {
+  const { draftId } = await params;
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -17,7 +15,7 @@ export async function GET(_: Request, { params }: RouteParams) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const draft = await fetchDraftById(data.user.id, params.draftId);
+  const draft = await fetchDraftById(data.user.id, draftId);
 
   if (!draft) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
@@ -26,7 +24,11 @@ export async function GET(_: Request, { params }: RouteParams) {
   return NextResponse.json(draft, { status: 200 });
 }
 
-export async function PATCH(request: Request, { params }: RouteParams) {
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ draftId: string }> }
+) {
+  const { draftId } = await params;
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -46,7 +48,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   }
 
   try {
-    const draft = await updateDraft(data.user.id, params.draftId, payload);
+    const draft = await updateDraft(data.user.id, draftId, payload);
     if (!draft) {
       return NextResponse.json({ error: "Not Found" }, { status: 404 });
     }
