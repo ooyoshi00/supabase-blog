@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import Tiptap from "@/app/blogs/new/Editor";
+import Tiptap from "@/app/blogs/(protected)/new/Editor";
 
 const mockEditor = () => {
   const run = vi.fn();
