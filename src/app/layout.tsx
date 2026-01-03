@@ -60,8 +60,34 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
           <main className="flex-1">{children}</main>
 
           <footer className="border-t py-2">
-            <div className="flex flex-col items-center justify-center text-sm space-y-5">
-              <div>©FullStackChannel. ALL Rights Reserved.</div>
+            <div className="flex flex-row items-center justify-center text-sm gap-4">
+              <div>関連アカウント: </div>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <a
+                  href="https://x.com/okamune_web"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  X
+                </a>
+                <a
+                  href="https://zenn.dev/yoshiooon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  Zenn
+                </a>
+                <a
+                  href="https://qiita.com/okamune"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  Qiita
+                </a>
+              </div>
             </div>
           </footer>
         </div>
