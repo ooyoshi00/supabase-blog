@@ -1,8 +1,11 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../../../../utils/supabase/server";
-import Tiptap from "./Editor";
 
-export default async function Home() {
+interface ProtectedLayoutProps {
+  children: React.ReactNode;
+}
+
+const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -10,5 +13,7 @@ export default async function Home() {
     redirect("/login");
   }
 
-  return <Tiptap />;
-}
+  return children;
+};
+
+export default ProtectedLayout;

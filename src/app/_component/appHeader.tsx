@@ -100,12 +100,14 @@ const Header = ({ user }: HeaderProps) => {
                   設定
                 </Link>
 
-                <div
-                  className="cursor-pointer hover:text-blue-200 transition-colors"
+                <button
+                  type="button"
+                  className="flex items-center gap-1 hover:text-blue-200 transition-colors"
                   onClick={handleLogout}
                 >
                   <LogOut className="h-5 w-5" />
-                </div>
+                  <span>ログアウト</span>
+                </button>
               </div>
             ) : (
               <div className="flex items-center space-x-5">

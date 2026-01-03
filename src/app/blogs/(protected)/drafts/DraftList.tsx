@@ -1,4 +1,4 @@
-import Sidebar from "../../_component/SideBar";
+import Sidebar from "../../../_component/SideBar";
 import DraftCard from "./DraftCard";
 import { buildDraftPreview } from "@/lib/drafts/service";
 import type { Draft } from "@/lib/drafts/types";

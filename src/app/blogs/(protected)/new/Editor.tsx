@@ -5,11 +5,11 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import { v4 as uuidv4 } from "uuid";
-import RichEditorToolbar from "@/app/blogs/new/EditorToolBar";
+import RichEditorToolbar from "@/app/blogs/(protected)/new/EditorToolBar";
 import { createDraft, fetchDraft, updateDraft } from "@/lib/drafts/client";
 import { createPost, publishDraft } from "@/lib/posts/client";
 import { buildDraftInput, normalizeDraftContent } from "@/lib/drafts/service";
-import { createClient } from "../../../../utils/supabase/client";
+import { createClient } from "../../../../../utils/supabase/client";
 import { useRouter } from "next/navigation";
 import "./editor.scss";
 
