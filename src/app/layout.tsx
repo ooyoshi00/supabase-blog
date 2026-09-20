@@ -1,13 +1,22 @@
-import ToastProvider from "@/app/_component/providers/ToastProvider";
 import type { Metadata, Viewport } from "next";
-import { M_PLUS_1 } from "next/font/google";
-import { createClient } from "../../utils/supabase/server";
+import localFont from "next/font/local";
+import ToastProvider from "@/app/_component/providers/ToastProvider";
 import "./globals.css";
 import Header from "@/app/_component/appHeader";
 
-const mPlus1 = M_PLUS_1({
-  weight: ["400", "700", "900"],
-  subsets: ["latin"],
+const inter = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Inter-roman.latin.var.woff2",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Inter-italic.latin.var.woff2",
+      style: "italic",
+    },
+  ],
+  display: "swap",
+  fallback: ["Hiragino Kaku Gothic ProN", "Yu Gothic", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -45,17 +54,13 @@ interface RootLayoutProps {
 }
 
 // ルートレイアウト
-const RootLayout = async ({ children }: RootLayoutProps) => {
-  const supabase = createClient();
-  const { data } = await supabase.auth.getUser();
-  const user = data?.user;
-
+const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="ja">
-      <body className={mPlus1.className}>
+      <body className={inter.className}>
         <ToastProvider />
         <div className="flex min-h-screen flex-col">
-          <Header user={user} />
+          <Header />
 
           <main className="flex-1">{children}</main>
 

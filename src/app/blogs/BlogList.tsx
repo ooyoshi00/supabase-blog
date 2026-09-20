@@ -1,6 +1,6 @@
-import BlogCard from "./BlogCard";
+import { getAllPosts } from "@/lib/blog/posts";
 import Sidebar from "../_component/SideBar";
-import { fetchPosts } from "@/lib/posts/repository";
+import BlogCard from "./BlogCard";
 
 const formatPostDate = (value: string) =>
   new Date(value).toLocaleDateString("ja-JP", {
@@ -10,7 +10,7 @@ const formatPostDate = (value: string) =>
   });
 
 const BlogList = async () => {
-  const posts = await fetchPosts();
+  const posts = await getAllPosts();
   return (
     <div className="flex flex-col md:flex-row gap-8">
       <div className="md:w-3/4">
@@ -23,11 +23,12 @@ const BlogList = async () => {
           <div className="space-y-8">
             {posts.map((post) => (
               <BlogCard
-                key={post.postId}
-                id={post.postId}
+                key={post.slug}
+                slug={post.slug}
                 title={post.title}
                 excerpt={post.excerpt}
-                date={formatPostDate(post.publishedAt)}
+                date={formatPostDate(post.date)}
+                tags={post.tags}
               />
             ))}
           </div>

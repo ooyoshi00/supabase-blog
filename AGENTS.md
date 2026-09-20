@@ -132,8 +132,8 @@
 - チームや将来の開発者のために知識を文書化
 
 ## Active Technologies
-- TypeScript 5.3.3 + Next.js 15.3, React 19, @supabase/supabase-js, Tiptap 3 (001-save-tiptap-content)
-- Supabase（データベース + 画像ストレージ） (001-save-tiptap-content)
+- TypeScript 5.3.3 + Next.js 16.1, React 19
+- Markdown（ブログ記事）+ `public/images/blog`（記事画像）
 
 ## Recent Changes
-- 001-save-tiptap-content: Added TypeScript 5.3.3 + Next.js 15.3, React 19, @supabase/supabase-js, Tiptap 3
+- ブログをSupabase/Tiptap構成から、Git管理のMarkdownによる静的ブログへ移行

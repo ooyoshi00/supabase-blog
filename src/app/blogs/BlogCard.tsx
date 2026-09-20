@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { CalendarIcon, TagIcon } from "lucide-react";
+import Link from "next/link";
 
 interface BlogPost {
-  id: string;
+  slug: string;
   title: string;
   excerpt: string;
   date: string;
@@ -13,7 +13,7 @@ interface BlogPost {
 const BlogCard: React.FC<BlogPost> = (post) => {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
-      <Link href={`/blogs/${post.id}`}>
+      <Link href={`/blogs/${post.slug}`}>
         <h2 className="text-xl font-semibold mb-2 text-gray-800 hover:text-blue-600 transition-colors">
           {post.title}
         </h2>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[okamune home]]></title>
+        <description><![CDATA[okamuneのポートフォリオ兼ブログ]]></description>
+        <link>https://okamune.vercel.app</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Sun, 20 Sep 2026 08:03:12 GMT</lastBuildDate>
+        <atom:link href="https://okamune.vercel.app/feed.xml" rel="self" type="application/rss+xml"/>
+        <language><![CDATA[ja]]></language>
+        <item>
+            <title><![CDATA[Next.jsの考え方 読書メモ]]></title>
+            <description><![CDATA[Next.jsのData Cache、Server Actions、PPR、認証・認可についての読書メモです。]]></description>
+            <link>https://okamune.vercel.app/blogs/nextjs-thinking-notes</link>
+            <guid isPermaLink="true">https://okamune.vercel.app/blogs/nextjs-thinking-notes</guid>
+            <pubDate>Sun, 16 Feb 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[今年の目標]]></title>
+            <description><![CDATA[30歳を迎える年に、開発・英語学習・運動について立てた目標をまとめました。]]></description>
+            <link>https://okamune.vercel.app/blogs/new-year-goals</link>
+            <guid isPermaLink="true">https://okamune.vercel.app/blogs/new-year-goals</guid>
+            <pubDate>Thu, 02 Jan 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ポートフォリオのリニューアルしました]]></title>
+            <description><![CDATA[2025年にポートフォリオをリニューアルして公開した際の記録です。]]></description>
+            <link>https://okamune.vercel.app/blogs/portfolio-renewal</link>
+            <guid isPermaLink="true">https://okamune.vercel.app/blogs/portfolio-renewal</guid>
+            <pubDate>Thu, 02 Jan 2025 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>

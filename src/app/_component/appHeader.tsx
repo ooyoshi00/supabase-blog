@@ -1,28 +1,9 @@
 "use client";
-import { User } from "@supabase/supabase-js";
-import { LogIn, LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "../../../utils/supabase/client";
+import { usePathname } from "next/navigation";
 
-type HeaderProps = {
-  user: User | null;
-};
-
-const Header = ({ user }: HeaderProps) => {
+const Header = () => {
   const pathname = usePathname();
-  const router = useRouter();
-  const supabase = createClient();
-
-  const handleLogout = async () => {
-    if (!window.confirm("ログアウトしますが、宜しいですか？")) {
-      return;
-    }
-
-    await supabase.auth.signOut();
-    router.push("/login");
-    router.refresh();
-  };
 
   return (
     <header className="bg-blue-600 text-white">
@@ -49,79 +30,7 @@ const Header = ({ user }: HeaderProps) => {
                 ブログ
               </Link>
             </li>
-            {process.env.IS_DEV && (
-              <li>
-                <Link
-                  href="/rss"
-                  className={`hover:text-blue-200 transition-colors ${
-                    pathname === "/rss" ? "font-bold" : ""
-                  }`}
-                >
-                  RSS
-                </Link>
-              </li>
-            )}
-            {process.env.IS_DEV && (
-              <li>
-                <Link
-                  href="/rss"
-                  className={`hover:text-blue-200 transition-colors ${
-                    pathname === "/portfolio" ? "font-bold" : ""
-                  }`}
-                >
-                  経歴
-                </Link>
-              </li>
-            )}
           </ul>
-
-          <div className="text-sm font-bold">
-            {user ? (
-              <div className="flex items-center space-x-5">
-                <Link
-                  href="/blogs/new"
-                  className="hover:text-blue-200 transition-colors"
-                >
-                  投稿
-                </Link>
-                <Link
-                  href="/blogs/drafts"
-                  className={`hover:text-blue-200 transition-colors ${
-                    pathname?.startsWith("/blogs/drafts") ? "font-bold" : ""
-                  }`}
-                >
-                  下書き一覧
-                </Link>
-
-                <Link
-                  href="/settings/profile"
-                  className="hover:text-blue-200 transition-colors"
-                >
-                  設定
-                </Link>
-
-                <button
-                  type="button"
-                  className="flex items-center gap-1 hover:text-blue-200 transition-colors"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="h-5 w-5" />
-                  <span>ログアウト</span>
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-5">
-                <Link
-                  href="/login"
-                  className="hover:text-blue-200 transition-colors flex gap-1"
-                >
-                  <LogIn className="h-5 w-5" />
-                  <span>管理者ログイン</span>
-                </Link>
-                {/* <Link href="/signup" className="hover:text-blue-200 transition-colors">サインアップ</Link> */}
-              </div>
-            )}
-          </div>
         </div>
       </nav>
     </header>

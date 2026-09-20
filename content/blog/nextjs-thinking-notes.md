@@ -1,7 +1,11 @@
 ---
-title: 'Next.jsの考え方 読書メモ'
-date: '2025-02-16'
-link: https://zenn.dev/akfm/books/nextjs-basic-principle
+title: "Next.jsの考え方 読書メモ"
+date: "2025-02-16"
+excerpt: "Next.jsのData Cache、Server Actions、PPR、認証・認可についての読書メモです。"
+tags:
+  - Next.js
+  - 読書メモ
+sourceUrl: "https://zenn.dev/akfm/books/nextjs-basic-principle"
 ---
 
 ※スクラップ記事です
@@ -50,7 +54,7 @@ link: https://zenn.dev/akfm/books/nextjs-basic-principle
 
 - AppRouter では、error.tsx に定義した UI を ServerComponents の実行中に表示することができる
   - SSR 時の Client Components でエラーが起きた場合でも使われる
-- not-found.tsx により、404 の時の振る舞いも指定できる
+- not-found.tsx により、404 の時の振る舞いを指定できる
 - serverActions でエラーが起きた際、error.tsx の内容が表示される
   - ただ、form の入力内容が途中で破棄されてしまうなどの問題が起こりかねない
   - なのでエラーを throw するのではなく、戻り値でエラーを表現することが望ましい

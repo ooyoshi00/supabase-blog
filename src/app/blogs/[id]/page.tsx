@@ -1,6 +1,7 @@
-import BlogPost from "./BlogPost";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { fetchPostById } from "@/lib/posts/repository";
+import { getAllPosts, getPostBySlug } from "@/lib/blog/posts";
+import BlogPost from "./BlogPost";
 
 const formatPostDate = (value: string) =>
   new Date(value).toLocaleDateString("ja-JP", {
@@ -9,14 +10,35 @@ const formatPostDate = (value: string) =>
     day: "2-digit",
   });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function Page({ params }: any) {
-  const id = params.id;
-  if (!id) {
-    notFound();
+type BlogPageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({ id: post.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: BlogPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const post = await getPostBySlug(id);
+
+  if (!post) {
+    return {};
   }
 
-  const post = await fetchPostById(id);
+  return {
+    title: post.title,
+    description: post.excerpt,
+  };
+}
+
+export default async function Page({ params }: BlogPageProps) {
+  const { id } = await params;
+
+  const post = await getPostBySlug(id);
   if (!post) {
     notFound();
   }
@@ -26,8 +48,9 @@ export default async function Page({ params }: any) {
       <article>
         <BlogPost
           title={post.title}
-          publishedAtLabel={formatPostDate(post.publishedAt)}
+          publishedAtLabel={formatPostDate(post.date)}
           content={post.content}
+          sourceUrl={post.sourceUrl}
         />
       </article>
     </div>

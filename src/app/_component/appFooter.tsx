@@ -1,7 +1,4 @@
 import Image from "next/image";
-import nextConfig from "../../../next.config.mjs";
-
-const BASE_PATH = nextConfig.basePath || "";
 
 const socialLinks = {
   "X(旧Twitter)": {
@@ -9,7 +6,7 @@ const socialLinks = {
     link: "https://x.com/okamune_web",
     icon: (
       <Image
-        src={`${BASE_PATH}/images/x-logo.png`}
+        src="/images/x-logo.png"
         alt="x"
         width={24}
         height={24}
@@ -22,7 +19,7 @@ const socialLinks = {
     link: "https://github.com/ooyoshi00",
     icon: (
       <Image
-        src={`${BASE_PATH}/images/github.svg`}
+        src="/images/github.svg"
         alt="github"
         width={24}
         height={24}
@@ -35,7 +32,7 @@ const socialLinks = {
     link: "https://zenn.dev/yoshiooon",
     icon: (
       <Image
-        src={`${BASE_PATH}/images/zenn.svg`}
+        src="/images/zenn.svg"
         alt="Zenn"
         width={24}
         height={24}
@@ -46,14 +43,7 @@ const socialLinks = {
   Qiita: {
     name: "@okamune",
     link: "https://qiita.com/okamune",
-    icon: (
-      <Image
-        src={`${BASE_PATH}/images/qiita.png`}
-        alt="Qiita"
-        width={24}
-        height={24}
-      />
-    ),
+    icon: <Image src="/images/qiita.png" alt="Qiita" width={24} height={24} />,
   },
 };
 

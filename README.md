@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# okamune home
 
-## Getting Started
+Next.jsで構築したポートフォリオ兼ブログです。ブログ記事はデータベースを使わず、リポジトリ内のMarkdownファイルとして管理します。
 
-First, run the development server:
+## 開発
+
+依存関係をインストールし、開発サーバーを起動します。
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ブログ記事の追加
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. `content/blog/<slug>.md` を追加します。ファイル名が記事URLのslugになります。
+2. 記事画像を `public/images/blog/` に配置します。
+3. Markdown本文から `/images/blog/<ファイル名>` で画像を参照します。
 
-## Learn More
+記事ファイルの例:
 
-To learn more about Next.js, take a look at the following resources:
+```md
+---
+title: "記事タイトル"
+date: "2026-09-20"
+excerpt: "記事一覧と検索結果に表示する概要です。"
+tags:
+  - Next.js
+  - TypeScript
+sourceUrl: "https://example.com/optional"
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+本文をMarkdownで記述します。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![画像の説明](/images/blog/example.png)
+```
 
-## Deploy on Vercel
+`title`、`date`、`excerpt` は必須です。`tags` と `sourceUrl` は省略できます。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 確認
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm test
+npm run lint
+npm run build
+```
